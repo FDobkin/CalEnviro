@@ -1,0 +1,24 @@
+#Creating regional variables
+ces <- as.data.table(ces)
+  ces[county %in% c("Alameda", "Contra Costa", "Marin", "Napa",
+                  "San Francisco", "San Mateo", "Santa Clara",
+                  "Santa Cruz", "Solano", "Sonoma"), region := "B_Area"]
+  ces[county %in% c("Orange", "Riverside", "San Bernardino",
+                 "San Diego", "Santa Barbara", "Ventura"), region := "s_california"]
+  ces[county %in%  c("Fresno", "Imperial", "Kern", "Kings", "Madera", 
+                 "Merced", "Monterey", "San Benito", "San Joaquin",
+                 "San Lois Obispo","Stanislaus", "Tulare"), region := "cs_farm"]
+  ces[county %in%  c("Alpine", "Amador", "Butte", "Calaveras", 
+                "Del Norte","Glenn", "Humboldt", "Inyo", "Lake",
+                "Lassen", "Mariposa", "Mendocino", "Modoc", 
+                "Nevada", "Plumas", "Shasta", "Sierra",
+                "Siskiyou", "Tehama", "Trinity", "Tuolumne"), region := "n_mountain"]
+  ces[county %in%  c("Colusa", "El Dorado", "Placer", "Sacramento",
+                 "Sutter", "Yolo", "Yuba"), region := "c_valley"]
+                              
+#Built Environment Variable. Rural values are counties with no urban areas, semi_rural are counties where 50% or more of the population is rural while urban are 50% or more of the population is urban.
+ces <- as.data.table(ces)
+ces[county %in% c("Alpine", "Mariposa", "Sierra", "Trinity"), built_enviro := "rural"]
+ces[county %in% c("Plumas", "Calaveras", "Modoc", "Siskiyou",
+                  "Amador", "Lassen", "Mono"), built_enviro := "semi_rural"]
+ces$built_enviro[is.na(ces$built_enviro)] <- "urban"
