@@ -22,3 +22,7 @@ ces[county %in% c("Alpine", "Mariposa", "Sierra", "Trinity"), built_enviro := "r
 ces[county %in% c("Plumas", "Calaveras", "Modoc", "Siskiyou",
                   "Amador", "Lassen", "Mono"), built_enviro := "semi_rural"]
 ces$built_enviro[is.na(ces$built_enviro)] <- "urban"
+
+#Convert SB535 "Yes" and "No" values to 1 and 0 
+ces <- ces %>%
+  mutate(sb535 = ifelse(sb535 == "Yes", 0, 1))
