@@ -26,3 +26,16 @@ ces$built_enviro[is.na(ces$built_enviro)] <- "urban"
 #Convert SB535 "Yes" and "No" values to 1 and 0 
 ces <- ces %>%
   mutate(sb535 = ifelse(sb535 == "Yes", 0, 1))
+
+#Clean first row
+ces_bind <- ces_bind[-c(1),]
+
+#Binded Data and Renames Coluns
+ces_binded <- cbind(ces_bind, ces)
+ces_clean <- ces_binded[,-c(1)]
+ces_binded <- names(ces_clean)[names(ces_clean) == "CES 3.0 Score"] <- "ces_score"
+
+
+
+
+
