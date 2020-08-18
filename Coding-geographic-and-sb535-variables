@@ -16,21 +16,18 @@ ces <- as.data.table(ces)
   ces[county %in%  c("Colusa", "El Dorado", "Placer", "Sacramento",
                  "Sutter", "Yolo", "Yuba"), region := "c_valley"]
                               
+
+
+
 #Built Environment Variable. Rural values are counties with no urban areas, semi_rural are counties where 50% or more of the population is rural while urban are 50% or more of the population is urban.
 ces <- as.data.table(ces)
 ces[county %in% c("Alpine", "Mariposa", "Sierra", "Trinity"), built_enviro := "rural"]
 ces[county %in% c("Plumas", "Calaveras", "Modoc", "Siskiyou",
                   "Amador", "Lassen", "Mono"), built_enviro := "semi_rural"]
 ces$built_enviro[is.na(ces$built_enviro)] <- "urban"
-
-#Convert SB535 "Yes" and "No" values to 1 and 0 
 ces <- ces %>%
   mutate(sb535 = ifelse(sb535 == "Yes", 0, 1))
-
-#Clean first row
 ces_bind <- ces_bind[-c(1),]
-
-#Binded Data and Renames Columns
 ces_binded <- cbind(ces_bind, ces)
 ces_clean <- ces_binded[,-c(1)]
 ces_binded <- names(ces_clean)[names(ces_clean) == "CES 3.0 Score"] <- "ces_score"
